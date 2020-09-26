@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Set the colormap
 plt.rcParams['image.cmap'] = 'BrBG'
 
-def evolve(u, u_previous, a, dt, dx2, dy2):
+cdef evolve(u, u_previous, a, dt, dx2, dy2):
     """Explicit time evolution.
        u:            new temperature field
        u_previous:   previous field
@@ -24,10 +24,12 @@ def evolve(u, u_previous, a, dt, dx2, dy2):
                  u_previous[i, j-1]) / dy2 )
     u_previous[:] = u[:]
 
-def iterate(field, field0, a, dx, dy, timesteps, image_interval):
+def iterate(field, field0, double a, double dx, double dy, int timesteps, int image_interval):
     """Run fixed number of time steps of heat equation"""
 
+    double dx2 
     dx2 = dx**2
+    double dy2 
     dy2 = dy**2
 
     # For stability, this is the largest interval possible
